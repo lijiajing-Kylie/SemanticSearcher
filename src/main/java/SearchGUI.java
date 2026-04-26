@@ -219,6 +219,30 @@ public class SearchGUI extends JFrame {
 
         card.add(rankLabel, BorderLayout.WEST);
         card.add(textPanel, BorderLayout.CENTER);
+        // 点击卡片用浏览器打开对应Wikipedia页面
+        String wikiUrl = "https://en.wikipedia.org/wiki/" +
+                docTitle.replace(" ", "_");
+        card.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        card.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new java.net.URI(wikiUrl));
+                } catch (Exception ex) {
+                    System.err.println("Failed to open URL: " + ex.getMessage());
+                }
+            }
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent e) {
+                card.setBackground(new Color(40, 40, 58));
+                card.repaint();
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent e) {
+                card.setBackground(CARD);
+                card.repaint();
+            }
+        });
         return card;
     }
 
